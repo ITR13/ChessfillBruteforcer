@@ -59,7 +59,7 @@ W = 4
 H = 4
 DEFAULT_PIECES	= 0b1111111111111111
 PAWNS			= 0b1111111100000000
-TOWERS			= 0b0000000011000000
+ROOKS			= 0b0000000011000000
 KNIGHTS			= 0b0000000000110000
 BISHOPS			= 0b0000000000001100
 QUEENS			= 0b0000000000000010
@@ -92,19 +92,21 @@ def knight_can_move(x, y, dx, dy):
 def bishop_can_move(x, y, dx, dy):
 	return dx==dy or dx==-dy
 
-def tower_can_move(x, y, dx, dy):
+def rook_can_move(x, y, dx, dy):
 	return dx==0 or dy==0
 
 def queen_can_move(x, y, dx, dy):
-	return bishop_can_move(x, y, dx, dy)  or  tower_can_move(x, y, dx, dy)
+	return bishop_can_move(x, y, dx, dy)  or  rook_can_move(x, y, dx, dy)
 
 def pawn_can_move(x, y, dx, dy):
 	return (
-		y==3 and queen_can_move  or
-		dx == 0 and (y==1 and dy == 2  or  dy == 1)
+		(y==3 and queen_can_move(x, y, dx, dy)) or
+		(dx == 0 and ((y==1 and dy == 2) or  dy == 1))
 	)
 
 def bitshift_amount(bin):
+	if bin == 0:
+		return -1
 	i = 0
 	while bin%2 == 0:
 		bin >>= 1
@@ -113,12 +115,13 @@ def bitshift_amount(bin):
 
 PIECES = [
 	(PAWNS, pawn_can_move),
-	(TOWERS, tower_can_move),
+	(ROOKS, rook_can_move),
 	(KNIGHTS, knight_can_move),
 	(BISHOPS, bishop_can_move),
 	(QUEENS, queen_can_move),
 	(KINGS, king_can_move),
 ]
+
 PIECES = [(i, j, bitshift_amount(i), count_ones(i)) for i, j in PIECES]
 
 
@@ -196,7 +199,7 @@ class Board:
 		dx = x-self.prev_x
 		dy = y-self.prev_y
 
-		return PIECES[piece_index][1](x, y, dx, dy)
+		return PIECES[piece_index][1](self.prev_x, self.prev_y, dx, dy)
 
 	@system_exitable
 	def place(self, piece_binary_index, x, y):

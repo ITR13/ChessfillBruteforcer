@@ -52,7 +52,7 @@ HTML_END = """
 
 BASE_HTML = HTML_START + "{body}" + HTML_END
 
-PIECE_NAMES = ["Pawn", "Tower", "Knight", "Bishop", "Queen", "King"]
+PIECE_NAMES = ["Pawn", "Rook", "Knight", "Bishop", "Queen", "King"]
 
 def load_solution(key):
 	with ENV.begin() as txn:
@@ -288,7 +288,7 @@ def handle_blank(wfile, qs, path, query):
 <br>
 <br>
 <h3>No idea what this is?</h3>
-This is a website designed to give me the optimal solution to <a href="https://games.increpare.com/schachdeckel/">Chessfill</a> by <a href="https://www.increpare.com/">Stephen Lavelle</a><br><br>I got a 50USD trial for a server on digitalocean, so I had to figure out a way to spend them within the month, so I decided to just run a script that bruteforced it. The code for this is really messy, but can be found at <a href="https://github.com/ITR13/ChessfillBruteforcer">https://github.com/ITR13/ChessfillBruteforcer</a>if you want to see it.<br><br>Ended up having to restart the script 4 times since I noticed mistakes in my assumptions, lol.
+This is a website designed to give me the optimal solution to <a href="https://games.increpare.com/schachdeckel/">Chessfill</a> by <a href="https://www.increpare.com/">Stephen Lavelle</a><br><br>I got a 50USD trial for a server on digitalocean, so I had to figure out a way to spend them within the month, so I decided to just run a script that bruteforced it. The code for this is really messy, but can be found at <a href="https://github.com/ITR13/ChessfillBruteforcer">https://github.com/ITR13/ChessfillBruteforcer</a>if you want to see it.<br><br>Ended up having to restart the script 5 times since I noticed mistakes in my assumptions, lol.
 		"""
 	).encode())
 
